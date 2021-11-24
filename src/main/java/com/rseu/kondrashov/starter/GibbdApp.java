@@ -1,7 +1,5 @@
 package com.rseu.kondrashov.starter;
 
-import com.rseu.kondrashov.controller.MainMenuController;
-import com.rseu.kondrashov.model.MainMenuModel;
 import com.rseu.kondrashov.view.*;
 
 import javax.swing.*;
@@ -37,8 +35,6 @@ public class GibbdApp {
     }
 
     private MainMenuView createMainMenuView() {
-        MainMenuModel mainMenuModel = new MainMenuModel();
-        MainMenuController mainMenuController = new MainMenuController();
         return new MainMenuView(parentView, viewSupplier);
     }
 
