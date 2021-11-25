@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Event {
-    String objectSenderId;
+    Object sender;
+    String tag;
     EventData data;
 }

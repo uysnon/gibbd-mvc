@@ -12,6 +12,11 @@ public class Person implements EventSender {
     private String name;
     private StateInstance stateInstance;
 
+    public void setStateInstance(StateInstance stateInstance) {
+        StateInstance oldStateInstance = this.stateInstance;
+        this.stateInstance = stateInstance;
+        sendStateInstanceUpdated(oldStateInstance);
+    }
 
     @Override
     public List<Listener> getListeners() {
@@ -24,11 +29,10 @@ public class Person implements EventSender {
     }
 
     public void sendReadyForNextState() {
-        sendEvent(new Event(id, new NeedRefreshEventData("state", stateInstance)));
+        sendEvent(new Event(this, EventTags.NEED_UPDATE_STATE, new NeedRefreshEventData("state", stateInstance)));
     }
 
-
     private void sendStateInstanceUpdated(StateInstance oldStateInstance) {
-        sendEvent(new Event(id, new UpdateEventData("state", oldStateInstance, stateInstance)));
+        sendEvent(new Event(this,EventTags.NEW_STATE, new UpdateEventData("state", oldStateInstance, stateInstance)));
     }
 }
