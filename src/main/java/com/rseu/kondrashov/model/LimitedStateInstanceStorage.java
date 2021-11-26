@@ -1,20 +1,22 @@
 package com.rseu.kondrashov.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Stack;
+import java.util.Deque;
 
 @Data
+@AllArgsConstructor
 public class LimitedStateInstanceStorage implements StateInstanceStorage {
-    private Stack<StateInstance> stateInstancesPull;
+    private Deque<StateInstance> stateInstancesPull;
 
     @Override
     public synchronized StateInstance tryToGetInstance() {
-         if (stateInstancesPull.isEmpty()){
-             return null;
-         } else {
-             return stateInstancesPull.pop();
-         }
+        if (stateInstancesPull.isEmpty()) {
+            return null;
+        } else {
+            return stateInstancesPull.pop();
+        }
     }
 
 

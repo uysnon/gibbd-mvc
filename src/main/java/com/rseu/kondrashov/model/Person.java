@@ -1,11 +1,13 @@
 package com.rseu.kondrashov.model;
 
 import com.rseu.kondrashov.events.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Builder
 public class Person implements EventSender {
     private String id;
     private List<Listener> listeners;

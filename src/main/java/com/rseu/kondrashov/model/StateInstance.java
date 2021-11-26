@@ -9,6 +9,12 @@ public class StateInstance {
     private double totalWork;
     private double completedWork;
 
+    public StateInstance(State state, double speedPerMs, double totalWork) {
+        this.state = state;
+        this.speedPerMs = speedPerMs;
+        this.totalWork = totalWork;
+    }
+
     public boolean isCompleted() {
         return completedWork >= totalWork;
     }

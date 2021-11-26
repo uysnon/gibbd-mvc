@@ -1,8 +1,10 @@
 package com.rseu.kondrashov.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class PersonProcess extends Thread {
     private final static int SLEEP_MS = 10;
 

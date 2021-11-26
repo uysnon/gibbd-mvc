@@ -1,10 +1,12 @@
 package com.rseu.kondrashov.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class StateChain {
     private List<State> availableStates;
 
