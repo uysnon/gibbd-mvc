@@ -1,5 +1,9 @@
 package com.rseu.kondrashov.starter;
 
+import com.rseu.kondrashov.controller.GameController;
+import com.rseu.kondrashov.model.Game;
+import com.rseu.kondrashov.utils.GameCreator;
+import com.rseu.kondrashov.utils.GameParamsManager;
 import com.rseu.kondrashov.view.*;
 
 import javax.swing.*;
@@ -44,8 +48,12 @@ public class GibbdApp {
     }
 
     private GameView createGameView() {
-        // TODO
-        return null;
+        Game game = GameCreator.createGame(GameParamsManager.getGameParams());
+        GameController gameController = new GameController(game);
+        return new GameView(
+                parentView,
+                viewSupplier,
+                gameController);
     }
 
     private ParentView createParentView() {

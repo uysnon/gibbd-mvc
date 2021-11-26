@@ -13,16 +13,21 @@ public class ParentView {
         this.window = window;
         this.viewPanel = viewPanel;
         window.add(viewPanel);
-        viewPanel.setVisible(true);
     }
 
-    public void clear(){
+    public void clear() {
         viewPanel.removeAll();
         window.revalidate();
         window.repaint();
     }
 
-    public void repaint(){
+    public void addNewPanel(JPanel panel){
+        window.getContentPane().removeAll();
+        viewPanel = panel;
+        window.add(viewPanel);
+    }
+
+    public void repaint() {
         window.revalidate();
         window.transferFocus();
     }

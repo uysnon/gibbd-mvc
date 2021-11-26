@@ -10,7 +10,7 @@ import java.util.List;
 public class StateChain {
     private List<State> availableStates;
 
-    State getNext(State state) {
+    public State getNext(State state) {
         for (int i = 0; i < availableStates.size() - 1; i++) {
             if (availableStates.get(i).getId().equals(state.getId())) {
                 return availableStates.get(i + 1);
