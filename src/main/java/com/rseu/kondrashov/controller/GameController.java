@@ -15,6 +15,6 @@ public class GameController {
         game.getPersonProcesses()
                 .stream()
                 .map(PersonProcess::getPerson)
-                .forEach(p -> addListener(listener));
+                .forEach(p -> p.addListener(listener));
     }
 }

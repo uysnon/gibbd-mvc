@@ -2,12 +2,10 @@ package com.rseu.kondrashov.view;
 
 import com.rseu.kondrashov.model.Person;
 import com.rseu.kondrashov.model.StateInstance;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.awt.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Data
 @Builder
@@ -25,8 +23,8 @@ public class PersonView implements SubView {
         drawBattery(x, y, graphics);
         graphics.drawString(
                 person.getName(),
-                x,
-                y + 33
+                x + 25,
+                y + 20
         );
         graphics.setColor(oldColor);
     }
@@ -49,7 +47,7 @@ public class PersonView implements SubView {
         StateInstance stateInstance = person.getStateInstance();
         double totalWork = stateInstance.getTotalWork();
         double completedWork = stateInstance.getCompletedWork();
-        double percentCompleted = completedWork / totalWork;
+        double percentCompleted = totalWork > 0 ? completedWork / totalWork : 1;
         percentCompleted = percentCompleted > 1 ? 1 : percentCompleted;
         graphics.drawRect(x, y + 30, 30, 10);
         graphics.fillRect(x, y + 30, transformValue(30, percentCompleted), 10);

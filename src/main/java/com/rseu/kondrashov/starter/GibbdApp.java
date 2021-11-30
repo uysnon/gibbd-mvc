@@ -58,7 +58,7 @@ public class GibbdApp {
 
     private ParentView createParentView() {
         JFrame jFrame = new JFrame();
-        jFrame.setSize(1000, 1000);
+        jFrame.setSize(1260, 630);
         jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         jFrame.setVisible(true);
         JPanel jPanel = new JPanel();
