@@ -20,14 +20,22 @@ public class Gibbd implements Listener {
         }
     }
 
-    private void tryGivePersonNewState(Person person) {
+    private synchronized void tryGivePersonNewState(Person person) {
         StateInstance currentStateInstance = person.getStateInstance();
         State currentState = currentStateInstance.getState();
         State nextState = stateChain.getNext(currentState);
-        StateInstance nextStateInstance = stateStoragesMap.get(nextState).tryToGetInstance();
-        if (nextStateInstance != null) {
+        if (nextState != null) {
+            StateInstance nextStateInstance = stateStoragesMap.get(nextState).tryToGetInstance();
+            if (nextStateInstance != null) {
+                currentStateInstance.refresh();
+                stateStoragesMap.get(currentState).putInstance(currentStateInstance);
+                person.setStateInstance(nextStateInstance);
+            }
+        } else {
+            currentStateInstance.refresh();
             stateStoragesMap.get(currentState).putInstance(currentStateInstance);
-            person.setStateInstance(nextStateInstance);
+            person.setStateInstance(null);
         }
     }
+
 }

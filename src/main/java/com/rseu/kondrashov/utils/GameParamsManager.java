@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 public class GameParamsManager {
     public GameParams getGameParams() {
         GameParams gameParams = new GameParams();
-        gameParams.setPersonCount(10);
+        gameParams.setPersonCount(15);
         gameParams.setNewComerWindowsCount(2);
         gameParams.setInspectionPlacesCount(3);
         gameParams.setRepeatedComerWindowsCount(2);

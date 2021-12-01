@@ -40,6 +40,6 @@ public class Person implements EventSender {
     }
 
     private void sendStateInstanceUpdated(StateInstance oldStateInstance) {
-        sendEvent(new Event(this,EventTags.NEW_STATE, new UpdateEventData("state", oldStateInstance, stateInstance)));
+        sendEvent(new Event(this, EventTags.NEW_STATE, new UpdateEventData("state", oldStateInstance, stateInstance)));
     }
 }

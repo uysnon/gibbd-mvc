@@ -84,12 +84,12 @@ public class GameCreator {
 
     private Map<State, StateInstanceStorage> createStatesStorage(GameParams gameParams) {
         Map<State, StateInstanceStorage> map = new LinkedHashMap<>();
-        putState(map, NEW_COMERS_WAITING_STATE, 1, 0, -0.1);
-        putState(map, NEW_COMERS_WINDOW_STATE, gameParams.getNewComerWindowsCount(), 0.01, 10);
-        putState(map, WAITING_ROOM_BEFORE_INSPECTION, 1, 0, -0.1);
-        putState(map, INSPECTION_STATE, gameParams.getInspectionPlacesCount(), 0.01, 15);
-        putState(map, WAITING_ROOM_AFTER_INSPECTION, 1, 0, -0.1);
-        putState(map, REPEATED_COMERS_STATE, gameParams.getRepeatedComerWindowsCount(), 0.01, 5);
+        putState(map, NEW_COMERS_WAITING_STATE, 1, 1, 1500);
+        putState(map, NEW_COMERS_WINDOW_STATE, gameParams.getNewComerWindowsCount(), 1, 5000);
+        putState(map, WAITING_ROOM_BEFORE_INSPECTION, 1, 1, 1500);
+        putState(map, INSPECTION_STATE, gameParams.getInspectionPlacesCount(), 1, 15000);
+        putState(map, WAITING_ROOM_AFTER_INSPECTION, 1, 1, 1500);
+        putState(map, REPEATED_COMERS_STATE, gameParams.getRepeatedComerWindowsCount(), 15000, 5);
         return map;
     }
 
