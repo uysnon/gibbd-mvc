@@ -8,8 +8,8 @@ public class GameParamsManager {
     public GameParams getGameParams() {
         GameParams gameParams = new GameParams();
         gameParams.setPersonCount(15);
-        gameParams.setNewComerWindowsCount(2);
-        gameParams.setInspectionPlacesCount(3);
+        gameParams.setNewComerWindowsCount(10);
+        gameParams.setInspectionPlacesCount(5);
         gameParams.setRepeatedComerWindowsCount(2);
         return gameParams;
     }
