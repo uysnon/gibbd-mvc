@@ -54,7 +54,32 @@ public class GameCreator {
                             ).tryToGetInstance()
                     );
                 });
-        return new Game(personProcesses, gibbd);
+        return new Game(createMapPersonsFromList(personProcesses), gibbd);
+    }
+
+    public Person createPerson(List<String> existingIds) {
+        String name = availableNames
+                .stream()
+                .filter(n -> !existingIds.contains(n))
+                .findAny()
+                .orElse(null);
+        if (name == null) {
+            System.out.println("GameCreator: no available names!");
+            return null;
+        }
+        String id = name + "-id";
+        return Person.builder()
+                .id(id)
+                .name(name)
+                .listeners(new ArrayList<>())
+                .build();
+    }
+
+    private Map<String, PersonProcess> createMapPersonsFromList(List<PersonProcess> personProcessesList) {
+        return personProcessesList.stream().collect(Collectors.toMap(
+                p -> p.getPerson().getId(),
+                p -> p
+        ));
     }
 
     private List<PersonProcess> createPersons(GameParams gameParams) {

@@ -17,16 +17,18 @@ public class PersonView implements SubView {
 
     @Override
     public void paint(Graphics graphics) {
-        Color oldColor = graphics.getColor();
-        graphics.setColor(color);
-        drawSmile(x, y, 0.2, graphics);
-        drawBattery(x, y, graphics);
-        graphics.drawString(
-                person.getName(),
-                x + 25,
-                y + 20
-        );
-        graphics.setColor(oldColor);
+        if (person.getStateInstance() != null) {
+            Color oldColor = graphics.getColor();
+            graphics.setColor(color);
+            drawSmile(x, y, 0.2, graphics);
+            drawBattery(x, y, graphics);
+            graphics.drawString(
+                    person.getName(),
+                    x + 25,
+                    y + 20
+            );
+            graphics.setColor(oldColor);
+        }
     }
 
     private void drawSmile(int x, int y, double k, Graphics graphics) {

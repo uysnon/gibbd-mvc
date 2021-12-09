@@ -7,13 +7,12 @@ import com.rseu.kondrashov.events.Listener;
 import com.rseu.kondrashov.events.UpdateEventData;
 import com.rseu.kondrashov.model.Person;
 import com.rseu.kondrashov.model.PersonProcess;
-import com.rseu.kondrashov.model.StateInstance;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
@@ -28,6 +27,10 @@ public class GameView implements View, Listener {
     private JPanel contentPanel;
     private Map<String, PersonView> personViews;
     private BackgroundView backgroundView;
+    private JButton mainMenuButton;
+    private JButton addPersonButton;
+    private JPanel parentContentPanel;
+    private JPanel buttonsPanel;
 
 
     public GameView(
@@ -39,8 +42,34 @@ public class GameView implements View, Listener {
         this.viewsSupplier = viewSupplier;
         this.gameController = gameController;
         this.backgroundView = new BackgroundView();
+
+
+        parentContentPanel = new JPanel();
+        parentContentPanel.setLayout(new BorderLayout());
+        parentView.addNewPanel(parentContentPanel);
+
         initPersonViews();
         createContentPane();
+        initButtons();
+    }
+
+    private void initButtons() {
+        this.addPersonButton = new JButton("Добавить");
+        addPersonButton.addActionListener(e -> {
+            PersonProcess personProcess = gameController.addPerson(GameView.this);
+            if (personProcess != null) {
+                Person person = personProcess.getPerson();
+                personViews.put(
+                        person.getId(),
+                        createPersonViewFromPerson(person)
+                );
+            }
+        });
+        this.mainMenuButton = new JButton("Главное меню");
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(addPersonButton);
+        buttonsPanel.add(mainMenuButton);
+        parentContentPanel.add(buttonsPanel, BorderLayout.PAGE_END);
     }
 
     private void initPersonViews() {
@@ -49,20 +78,26 @@ public class GameView implements View, Listener {
         gameController
                 .getGame()
                 .getPersonProcesses()
+                .values()
                 .stream()
                 .map(PersonProcess::getPerson)
                 .forEach(p ->
                         this.personViews.put(
                                 p.getId(),
-                                PersonView
-                                        .builder()
-                                        .color(new Color(
-                                                ThreadLocalRandom.current().nextInt(0, 256),
-                                                ThreadLocalRandom.current().nextInt(0, 256),
-                                                ThreadLocalRandom.current().nextInt(0, 256)))
-                                        .person(p)
-                                        .build()
+                                createPersonViewFromPerson(p)
                         ));
+    }
+
+    private PersonView createPersonViewFromPerson(Person person) {
+        return
+                PersonView
+                        .builder()
+                        .color(new Color(
+                                ThreadLocalRandom.current().nextInt(0, 256),
+                                ThreadLocalRandom.current().nextInt(0, 256),
+                                ThreadLocalRandom.current().nextInt(0, 256)))
+                        .person(person)
+                        .build();
     }
 
     private void createContentPane() {
@@ -72,15 +107,17 @@ public class GameView implements View, Listener {
                 synchronized (GameView.this) {
                     Color oldColor = g.getColor();
                     g.setColor(Color.BLACK);
-                    g.drawString("ASFASFAF", 59, 59);
                     backgroundView.paint(g);
                     updateCoordinateForPlayersViews();
                     personViews.values().forEach(v -> v.paint(g));
                     g.setColor(oldColor);
+                    addPersonButton.repaint();
+                    mainMenuButton.repaint();
                 }
             }
         };
-        parentView.addNewPanel(contentPanel);
+        contentPanel.setSize(new Dimension(1000, 500));
+        parentContentPanel.add(contentPanel);
     }
 
     @Override
@@ -89,7 +126,7 @@ public class GameView implements View, Listener {
             gameController.startProcess();
         }
         parentView.repaint();
-        contentPanel.repaint();
+        parentContentPanel.repaint();
     }
 
     @Override
@@ -113,10 +150,14 @@ public class GameView implements View, Listener {
     private void updateCoordinateForPlayersViews() {
         coordinateSupplier.clear();
         for (PersonView personView : personViews.values()) {
-            Coordinate coordinate = coordinateSupplier
-                    .stayOnFieldAndGetCoordinate(personView.getPerson());
-            personView.setX(coordinate.getX());
-            personView.setY(coordinate.getY());
+            if (personView.getPerson().getStateInstance() != null) {
+                Coordinate coordinate = coordinateSupplier
+                        .stayOnFieldAndGetCoordinate(personView.getPerson());
+                if (coordinate != null) {
+                    personView.setX(coordinate.getX());
+                    personView.setY(coordinate.getY());
+                }
+            }
         }
     }
 }

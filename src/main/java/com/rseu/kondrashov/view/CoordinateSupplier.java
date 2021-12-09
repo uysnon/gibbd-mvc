@@ -51,9 +51,13 @@ public class CoordinateSupplier {
     }
 
     public synchronized Coordinate stayOnFieldAndGetCoordinate(Person person) {
-        return statesSlots
-                .get(person.getStateInstance().getState().getId())
-                .stayOnSlotAndGetCoordinate();
+        if (person.getStateInstance() != null) {
+            return statesSlots
+                    .get(person.getStateInstance().getState().getId())
+                    .stayOnSlotAndGetCoordinate();
+        } else {
+            return null;
+        }
     }
 
     public void clear() {
