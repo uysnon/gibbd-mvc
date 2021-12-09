@@ -3,11 +3,14 @@ package com.rseu.kondrashov.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class StateChain {
+public class StateChain implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private List<State> availableStates;
 
     public State getNext(State state) {

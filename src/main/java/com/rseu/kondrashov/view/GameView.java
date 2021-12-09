@@ -10,8 +10,6 @@ import com.rseu.kondrashov.model.PersonProcess;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -66,6 +64,11 @@ public class GameView implements View, Listener {
             }
         });
         this.mainMenuButton = new JButton("Главное меню");
+        mainMenuButton.addActionListener(e->{
+            gameController.stopGame();
+            parentView.clear();
+            viewsSupplier.get().get(MainMenuView.ID).get().draw();
+        });
         buttonsPanel = new JPanel();
         buttonsPanel.add(addPersonButton);
         buttonsPanel.add(mainMenuButton);

@@ -5,10 +5,13 @@ import com.rseu.kondrashov.events.EventTags;
 import com.rseu.kondrashov.events.Listener;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Data
-public class Gibbd implements Listener {
+public class Gibbd implements Serializable, Listener {
+    private static final long serialVersionUID = 1L;
+
     private StateChain stateChain;
     private Map<State, StateInstanceStorage> stateStoragesMap;
 

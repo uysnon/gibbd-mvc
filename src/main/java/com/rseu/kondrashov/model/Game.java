@@ -7,12 +7,15 @@ import com.rseu.kondrashov.events.UpdateEventData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
-public class Game implements Listener {
+public class Game implements Serializable, Listener {
+    private static final long serialVersionUID = 1L;
+
     private Map<String, PersonProcess> personProcesses;
     private Gibbd gibbd;
 
@@ -48,5 +51,12 @@ public class Game implements Listener {
                 .map(p -> p.getPerson().getId())
                 .collect(Collectors.toList())
                 .forEach(id -> personProcesses.remove(id));
+    }
+
+    public void stop() {
+        cleanInActivePersons();
+        personProcesses.
+                values()
+                .forEach(pr->pr.setPersonActive(false));
     }
 }

@@ -2,8 +2,12 @@ package com.rseu.kondrashov.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class StateInstance {
+public class StateInstance implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private State state;
     private double speedPerMs;
     private double totalWork;

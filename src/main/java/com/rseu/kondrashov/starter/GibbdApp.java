@@ -2,6 +2,7 @@ package com.rseu.kondrashov.starter;
 
 import com.rseu.kondrashov.controller.GameController;
 import com.rseu.kondrashov.model.Game;
+import com.rseu.kondrashov.utils.GameBackupManager;
 import com.rseu.kondrashov.utils.GameCreator;
 import com.rseu.kondrashov.utils.GameParamsManager;
 import com.rseu.kondrashov.view.*;
@@ -43,8 +44,12 @@ public class GibbdApp {
     }
 
     private ContinueGameView createContinueGameView() {
-        // TODO
-        return null;
+        Game game = GameBackupManager.getGame();
+        GameController gameController = new GameController(game);
+        return new ContinueGameView(
+                parentView,
+                viewSupplier,
+                gameController);
     }
 
     private GameView createGameView() {

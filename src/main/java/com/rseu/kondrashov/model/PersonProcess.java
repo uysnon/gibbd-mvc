@@ -2,9 +2,12 @@ package com.rseu.kondrashov.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class PersonProcess extends Thread {
+public class PersonProcess extends Thread implements Serializable {
     private final static int SLEEP_MS = 4;
+    private static final long serialVersionUID = 1L;
 
     private boolean isPersonActive;
     private Person person;
@@ -13,17 +16,24 @@ public class PersonProcess extends Thread {
         this.person = person;
     }
 
+    public synchronized void setPersonActive(boolean personActive) {
+        isPersonActive = personActive;
+    }
+
     @Override
     public void run() {
         super.run();
         isPersonActive = true;
-        while (person.getStateInstance() != null) {
+        while (person.getStateInstance() != null
+                || !isPersonActive) {
             try {
-                Thread.sleep(SLEEP_MS);
-                if (person.getStateInstance().isCompleted()) {
-                    person.sendReadyForNextState();
-                } else {
-                    person.getStateInstance().makeWork(SLEEP_MS);
+                synchronized (this) {
+                    Thread.sleep(SLEEP_MS);
+                    if (person.getStateInstance().isCompleted()) {
+                        person.sendReadyForNextState();
+                    } else {
+                        person.getStateInstance().makeWork(SLEEP_MS);
+                    }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

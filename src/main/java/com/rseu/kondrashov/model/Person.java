@@ -4,13 +4,15 @@ import com.rseu.kondrashov.events.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Builder
-public class Person implements EventSender {
+public class Person implements Serializable, EventSender {
+    private static final long serialVersionUID = 1L;
     private String id;
-    private List<Listener> listeners;
+    private transient List<Listener> listeners;
     private String name;
     private StateInstance stateInstance;
 

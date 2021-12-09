@@ -5,6 +5,7 @@ import com.rseu.kondrashov.model.Game;
 import com.rseu.kondrashov.model.Gibbd;
 import com.rseu.kondrashov.model.Person;
 import com.rseu.kondrashov.model.PersonProcess;
+import com.rseu.kondrashov.utils.GameBackupManager;
 import com.rseu.kondrashov.utils.GameCreator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -71,6 +72,7 @@ public class GameController {
     }
 
     public void stopGame() {
-
+        game.stop();
+        GameBackupManager.saveGame(game);
     }
 }

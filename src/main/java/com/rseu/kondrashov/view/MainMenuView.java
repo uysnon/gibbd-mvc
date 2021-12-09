@@ -1,5 +1,6 @@
 package com.rseu.kondrashov.view;
 
+import com.rseu.kondrashov.utils.GameBackupManager;
 import lombok.Data;
 
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class MainMenuView implements View {
 
     @Override
     public void draw() {
+        parentView.getViewPanel().setLayout(new BoxLayout(parentView.getViewPanel(), BoxLayout.PAGE_AXIS));
         parentView.repaint();
     }
 
@@ -75,7 +77,6 @@ public class MainMenuView implements View {
     }
 
     private boolean isContinueGameButtonNeed() {
-        // TODO
-        return false;
+        return GameBackupManager.isBackupExists();
     }
 }

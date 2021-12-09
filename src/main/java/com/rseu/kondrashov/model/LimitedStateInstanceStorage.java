@@ -3,11 +3,14 @@ package com.rseu.kondrashov.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Deque;
 
 @Data
 @AllArgsConstructor
-public class LimitedStateInstanceStorage implements StateInstanceStorage {
+public class LimitedStateInstanceStorage implements Serializable, StateInstanceStorage {
+    private static final long serialVersionUID = 1L;
+
     private Deque<StateInstance> stateInstancesPull;
 
     @Override
