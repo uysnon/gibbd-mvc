@@ -16,7 +16,7 @@ public class PersonProcess extends Thread implements Serializable {
         this.person = person;
     }
 
-    public synchronized void setPersonActive(boolean personActive) {
+    public void setPersonActive(boolean personActive) {
         isPersonActive = personActive;
     }
 
@@ -27,13 +27,11 @@ public class PersonProcess extends Thread implements Serializable {
         while (person.getStateInstance() != null
                 || !isPersonActive) {
             try {
-                synchronized (this) {
-                    Thread.sleep(SLEEP_MS);
-                    if (person.getStateInstance().isCompleted()) {
-                        person.sendReadyForNextState();
-                    } else {
-                        person.getStateInstance().makeWork(SLEEP_MS);
-                    }
+                Thread.sleep(SLEEP_MS);
+                if (person.getStateInstance().isCompleted()) {
+                    person.sendReadyForNextState();
+                } else {
+                    person.getStateInstance().makeWork(SLEEP_MS);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
